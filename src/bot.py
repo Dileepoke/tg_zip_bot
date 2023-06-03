@@ -4,20 +4,21 @@ from shutil import rmtree
 from pathlib import Path
 import logging
 import os
+import configparser
 
-from dotenv import load_dotenv
 from telethon import TelegramClient
 from telethon.events import NewMessage, StopPropagation
 from telethon.tl.custom import Message
 
 from utils import download_files, add_to_zip
 
-load_dotenv()
-
-API_ID = os.environ['API_ID']
-API_HASH = os.environ['API_HASH']
-BOT_TOKEN = os.environ['BOT_TOKEN']
-CONC_MAX = int(os.environ.get('CONC_MAX', 3))
+config = configparser.ConfigParser()
+config.read('config.ini')
+# Set environment variables from config.ini
+os.environ['API_ID'] = config['DEFAULT'].get('API_ID', '')
+os.environ['API_HASH'] = config['DEFAULT'].get('API_HASH', '')
+os.environ['BOT_TOKEN'] = config['DEFAULT'].get('BOT_TOKEN', '')
+os.environ['CONC_MAX'] = config['DEFAULT'].get('CONC_MAX', '4')
 STORAGE = Path('./files/')
 
 MessageEvent = NewMessage.Event | Message
