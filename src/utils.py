@@ -3,13 +3,13 @@ from asyncio import wait
 from asyncio.tasks import FIRST_COMPLETED
 from zipfile import ZipFile
 from pathlib import Path
-
+from zipfile import ZIP_DEFLATED
 from telethon.tl.custom import Message
 
 
 async def download_files(
     msgs: list[Message],
-    conc_max: int = 3,
+    conc_max: int = 4,
     root: Path | None = None
 ) -> Iterator[Path]:
     """
@@ -47,12 +47,12 @@ async def download_files(
 
 def add_to_zip(zip: Path, file: Path) -> None:
     """
-    Appends a file to a zip file.
+    Appends a file to a zip file with compression level 9.
 
     Args:
         zip: the zip file path.
         file: the path to the file that must be added.
     """
     flag = 'a' if zip.is_file() else 'x'
-    with ZipFile(zip, flag) as zfile:
+    with ZipFile(zip, flag, compression=ZIP_DEFLATED, compresslevel=9) as zfile:
         zfile.write(file, file.name)
