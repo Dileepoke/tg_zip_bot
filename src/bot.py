@@ -15,10 +15,10 @@ from utils import download_files, add_to_zip
 config = configparser.ConfigParser()
 config.read('config.ini')
 # Set environment variables from config.ini
-os.environ['API_ID'] = config['DEFAULT'].get('API_ID', '')
-os.environ['API_HASH'] = config['DEFAULT'].get('API_HASH', '')
-os.environ['BOT_TOKEN'] = config['DEFAULT'].get('BOT_TOKEN', '')
-os.environ['CONC_MAX'] = config['DEFAULT'].get('CONC_MAX', '4')
+API_ID = config['DEFAULT'].get('API_ID', '')
+API_HASH = config['DEFAULT'].get('API_HASH', '')
+BOT_TOKEN = config['DEFAULT'].get('BOT_TOKEN', '')
+CONC_MAX = config['DEFAULT'].get('CONC_MAX', '4')
 STORAGE = Path('./files/')
 
 MessageEvent = NewMessage.Event | Message
